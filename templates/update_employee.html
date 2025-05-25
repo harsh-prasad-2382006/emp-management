@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Employee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Update Employee</h4>
+        </div>
+        <div class="card-body">
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" name="first_name" id="first_name" class="form-control" value="{{ employee.first_name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" name="last_name" id="last_name" class="form-control" value="{{ employee.last_name }}" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" name="username" id="username" class="form-control" value="{{ employee.username }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" value="{{ employee.email }}" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="mobile" class="form-label">Mobile</label>
+                        <input type="text" name="mobile" id="mobile" class="form-control" value="{{ employee.mobile }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="date_of_joining" class="form-label">Date of Joining</label>
+                        <input type="date" name="date_of_joining" id="date_of_joining" class="form-control" value="{{ employee.date_of_joining|date:'Y-m-d' }}" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="dept" class="form-label">Department</label>
+                        <select name="dept" id="dept" class="form-select" required>
+                            {% for dept in departments %}
+                                <option value="{{ dept.dept_id }}" {% if employee.dept.dept_id == dept.dept_id %}selected{% endif %}>
+                                    {{ dept.dept_name|title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="role" class="form-label">Role</label>
+                        <select name="role" id="role" class="form-select" required>
+                            {% for role in roles %}
+                                <option value="{{ role.role_id }}" {% if employee.role.role_id == role.role_id %}selected{% endif %}>
+                                    {{ role.role_name|title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="reporting_manager" class="form-label">Reporting Manager</label>
+                    <select name="reporting_manager" id="reporting_manager" class="form-select">
+                        <option value="">Select Manager (optional)</option>
+                        {% for emp in employees %}
+                            
+                                <option value="{{ emp.employee_id }}" {% if employee.reporting_manager and employee.reporting_manager.employee_id == emp.employee_id %}selected{% endif %}>
+                                    {{ emp.first_name }} {{ emp.last_name }} - {{ emp.dept }}({{ emp.role }})
+                                </option>
+                        
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Update Employee</button>
+                    <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
