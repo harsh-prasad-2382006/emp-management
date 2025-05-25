@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-r63653i!eyrt7cx&*r6xaxdc-a#(!=l(a1d4k_o^n0#r&yu6%q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "52.66.239.49",
+    "emp-management-f17w.onrender.com",  # ✅ Just the domain, no protocol
+]
 
 
 # Application definition
@@ -121,3 +126,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://emp-management-f17w.onrender.com",
+]
